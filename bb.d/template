@@ -3,7 +3,7 @@
 SUBCOMMAND_DESC="Subcommand description"
 SUBCOMMAND_HELP=$(cat <<EOH
 
-action                      Action documentation
+hello                      Greetings from bb8
 
 EOH
 )
@@ -11,7 +11,8 @@ EOH
 #Different actions based on arguments
 case ${1} in
   hello)
-    echo "Hello World!"
+    in_cyan "Hello World!\n\n"
+    cat "${BB8_IMG}"
   ;;
 esac
 

@@ -1,3 +1,4 @@
+#!/bin/bash
 # vim: ft=sh sw=2 ts=2 expandtab
 SUBCOMMAND_DESC="Environment loaded for all  commands"
 SUBCOMMAND_HELP=$(cat <<EOH

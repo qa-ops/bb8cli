@@ -1,3 +1,4 @@
+#!/bin/bash
 # vim: ft=sh spell
 SUBCOMMAND_DESC="${MAIN_COMMAND} documentation"
 SUBCOMMAND_HELP=$(cat <<EOH
@@ -20,11 +21,6 @@ handle_interface           This should be called by the general
 
 load_conf                  Function which loads external configuration
                            for subcommands.
-
-twin                       Information about having a copy of this
-                           tool so it can be extended to your project.
-                           Without needing to actually copy and change
-                           the ${MAIN_COMMAND} code.
 
 EOH
 )

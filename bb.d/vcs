@@ -1,3 +1,4 @@
+#!/bin/bash
 # vim: ft=sh
 SUBCOMMAND_DESC="Shortcut version control"
 SUBCOMMAND_HELP=$(cat <<EOH

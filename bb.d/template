@@ -1,3 +1,4 @@
+#!/bin/bash
 # vim: ft=sh
 SUBCOMMAND_DESC="Subcommand description"
 SUBCOMMAND_HELP=$(cat <<EOH

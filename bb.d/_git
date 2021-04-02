@@ -1,3 +1,4 @@
+#!/bin/bash
 # vim: ft=sh
 
 # This is a implementation for the 'vcs' subcommand

@@ -24,6 +24,9 @@ hs_err_pid*
 
 .idea
 
+#ignore user specific configuration
+conf/user
+
 #folder to test some of the commands
 test
 

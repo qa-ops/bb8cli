@@ -35,12 +35,12 @@ EOH
 
 function download_repo() {
   local repo="${1}"
-  local extra_params="${@:2}"
   in_cyan "\nCloning repo: ${repos[${repo}]} to ${PROJECTS_DIR}\n"
 
   repo_subject=${repos[${repo}]##*/}
 
-  how_to_clone=$(contains_elements "-ssh" "${extra_params}" && echo "ssh" || echo "https")
+  [[ -z "${USER_GIT_PROTOCOL}" ]] && error "user config not found"
+
 
   log "Repo to clone: '${repo_subject}'"
   log "Cloning using: ${how_to_clone}"
@@ -51,7 +51,7 @@ function download_all_repos() {
   in_cyan "Downloading all repos \n"
 
   for repo in "${!repos[@]}"; do
-    download_repo "${repo}" "${@}"
+    download_repo "${repo}"
   done
 }
 
@@ -66,7 +66,7 @@ case ${1} in
   download)
     repo="${2}"
     log "Repo given '${2}'"
-    [[ -n ${repo} ]] && download_repo "${repo}" ${@:3} || download_all_repos ${@:2}
+    [[ -n ${repo} ]] && download_repo "${repo}" || download_all_repos
   ;;
   *)
     [[ -z ${1} ]] && return # early return when no argument is given

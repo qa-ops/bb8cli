@@ -11,7 +11,7 @@ EOH
 #Different actions based on arguments
 case ${1} in
   hello)
-    in_cyan "Hello World!\n\n"
+    in_cyan "Hello $(users). I'm here to make your life easier!\n\n"
     cat "${BB8_IMG}"
   ;;
 esac

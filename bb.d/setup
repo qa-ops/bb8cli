@@ -12,15 +12,15 @@ EOH
 USER_CONFIG_FILE="${CONFIGURATION_DIR}/user"
 
 function check_if_installed() {
-  local command="${1}"
-  local helpmsg="${2:-'please install it'}"
+  local lib="${1}"
+  local helpmsg="${2:-"please install it"}"
 
-  type -a "${command}" &> /dev/null
+  type -a "${lib}" &> /dev/null
 
   if [[ $? -ne 0 ]]; then
-    error "${command} isn't installed in this machine \n${helpmsg}"
+    error "${lib} isn't installed in this machine \n${helpmsg}"
   else
-    in_green "${command} is installed"
+    in_green "${lib} is installed"
   fi
 }
 
@@ -29,16 +29,28 @@ function check_if_file_exists() {
   local helpmsg="${2:-"You need to setup the cli"}"
 
   if [[ -e "${file}" ]]; then 
-    in_green "${file} exists" 
+    in_green "${file} file exists\n"
   else
-    error "${file} does not exist \n${helpmsg}"
+    error "${file} file does not exist \n${helpmsg}"
+  fi
+}
+
+function check_if_var_exists() {
+  local var="${1}"
+  local helpmsg="${2:-"You need to setup the cli"}"
+
+  if [[ -z "${!var}" ]]; then
+    error "${var} var does not exist\n${helpmsg}"
+  else
+    in_green "${var} var exists"
   fi
 }
 
 case ${1} in
   check)
     in_cyan "Check if all necessary configuration has been done\n"
-    check_if_file_exists "${USER_CONFIG_FILE}" "Execute the command '${MAIN_COMMAND} ${SUBCOMMAND} setup-user'"
+    check_if_file_exists "${USER_CONFIG_FILE}" "Execute the command '${MAIN_COMMAND} ${SUBCOMMAND} user'"
+    check_if_var_exists "GIT_SSH_PROTOCOL" "Make sure the ${USER_CONFIG_FILE} has this variable"
 
     in_cyan "\nCheck if all necessary software has been installed\n"
     check_if_installed "git"

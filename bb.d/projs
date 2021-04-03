@@ -38,15 +38,16 @@ function download_repo() {
   in_cyan "\nCloning repo: ${repo} to ${PROJECTS_DIR}\n"
 
   repo_subject="${repos[${repo}]##*/}"
+  log "The repo subject found is: ${repo_subject}"
 
-  [[ -z "${GIT_SSH_PROTOCOL}" ]] && error "user config not found.\nPlease execute 'bb setup check"
+  [[ -z "${GIT_SSH_PROTOCOL}" ]] && error "user config not found.\nPlease execute 'bb setup check'"
 
   if [[ "${GIT_SSH_PROTOCOL}" == "true" ]]; then
     log "Cloning ${repo_subject} using SSH"
-    git clone "git@github.com:qa-ops/${repo_subject}.git" "${repo_subject}"
+    git clone "git@github.com:qa-ops/${repo_subject}.git" "${PROJECTS_DIR}/${repo_subject}"
   else
     log "Cloning ${repo_subject} using https"
-    git clone "${repos[${repo}]}"
+    git clone "${repos[${repo}]}" "${PROJECTS_DIR}/${repo_subject}"
   fi
 }
 

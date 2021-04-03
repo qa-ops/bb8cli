@@ -31,5 +31,5 @@ function open_file() {
 export BB8_IMG="${ROOT_DIR}/images/bb8"
 export RESOURCE_DIR="${ROOT_DIR}/resources"
 
-#loads user specific configuration
-[[ -e ${CONFIGURATION_DIR}/user ]] && source "${CONFIGURATION_DIR}/user"
+#loads user_config specific configuration
+[[ -e "${CONFIGURATION_DIR}/user_config" ]] && source "${CONFIGURATION_DIR}/user_config"

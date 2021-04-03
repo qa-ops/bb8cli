@@ -9,7 +9,7 @@ user                Creates the user configuration file
 EOH
 )
 
-USER_CONFIG_FILE="${CONFIGURATION_DIR}/user"
+USER_CONFIG_FILE="${CONFIGURATION_DIR}/user_config"
 
 function check_if_installed() {
   local lib="${1}"

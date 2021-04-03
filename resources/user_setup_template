@@ -1,0 +1,4 @@
+#!/bin/bash
+
+#OPTIONS: ssh or https
+export GIT_SSH_PROTOCOL="true"

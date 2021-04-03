@@ -15,17 +15,17 @@ function _show_all() {
 SUBCOMMAND_DESC="Provides interactions with QAOps projects"
 SUBCOMMAND_HELP=$(cat <<EOH
 
-show                        Will list all repos
+show                  Will list all repos
 
-open <ALIAS>                Will invoke 'open repo', in OSX this will
-                            fire up your browser.
+open <ALIAS>          Will invoke 'open repo', in OSX this will
+                      fire up your browser.
 
-ALIAS                       Same as "open <ALIAS>" just a shortcut
+ALIAS                 Same as "open <ALIAS>" just a shortcut
 
-download {REPO} [-ssh]      Will download https REPO to the parent folder of this CLI
-                            ${PROJECTS_DIR}.
-                            If REPO not given, all projects will be downloaded
-                            [-ssh] Will download using ssh instead of https
+download {REPO}       Will download https REPO to the parent folder of this CLI
+                      ${PROJECTS_DIR}.
+                      If REPO not given, all projects will be downloaded
+                      [-ssh] Will download using ssh instead of https
 
 $(_show_all)
 
@@ -35,16 +35,19 @@ EOH
 
 function download_repo() {
   local repo="${1}"
-  in_cyan "\nCloning repo: ${repos[${repo}]} to ${PROJECTS_DIR}\n"
+  in_cyan "\nCloning repo: ${repo} to ${PROJECTS_DIR}\n"
 
-  repo_subject=${repos[${repo}]##*/}
+  repo_subject="${repos[${repo}]##*/}"
 
-  [[ -z "${USER_GIT_PROTOCOL}" ]] && error "user config not found"
+  [[ -z "${GIT_SSH_PROTOCOL}" ]] && error "user config not found.\nPlease execute 'bb setup check"
 
-
-  log "Repo to clone: '${repo_subject}'"
-  log "Cloning using: ${how_to_clone}"
-
+  if [[ "${GIT_SSH_PROTOCOL}" == "true" ]]; then
+    log "Cloning ${repo_subject} using SSH"
+    git clone "git@github.com:qa-ops/${repo_subject}.git" "${repo_subject}"
+  else
+    log "Cloning ${repo_subject} using https"
+    git clone "${repos[${repo}]}"
+  fi
 }
 
 function download_all_repos() {

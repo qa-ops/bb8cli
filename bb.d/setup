@@ -1,0 +1,57 @@
+#!/bin/bash
+# vim: ft=sh
+SUBCOMMAND_DESC="Setup the bb8cli"
+SUBCOMMAND_HELP=$(cat <<EOH
+
+check               Checks if all setup has being made
+user                Creates the user configuration file
+
+EOH
+)
+
+USER_CONFIG_FILE="${CONFIGURATION_DIR}/user"
+
+function check_if_installed() {
+  local command="${1}"
+  local helpmsg="${2:-'please install it'}"
+
+  type -a "${command}" &> /dev/null
+
+  if [[ $? -ne 0 ]]; then
+    error "${command} isn't installed in this machine \n${helpmsg}"
+  else
+    in_green "${command} is installed"
+  fi
+}
+
+function check_if_file_exists() {
+  local file="${1}"
+  local helpmsg="${2:-"You need to setup the cli"}"
+
+  if [[ -e "${file}" ]]; then 
+    in_green "${file} exists" 
+  else
+    error "${file} does not exist \n${helpmsg}"
+  fi
+}
+
+case ${1} in
+  check)
+    in_cyan "Check if all necessary configuration has been done\n"
+    check_if_file_exists "${USER_CONFIG_FILE}" "Execute the command '${MAIN_COMMAND} ${SUBCOMMAND} setup-user'"
+
+    in_cyan "\nCheck if all necessary software has been installed\n"
+    check_if_installed "git"
+  ;;
+  user)
+    in_cyan "Creating the user config file in ${CONFIGURATION_DIR}\n"
+
+    user_config_file="${USER_CONFIG_FILE}"
+
+    if cp -i "${RESOURCE_DIR}/user_setup_template" "${user_config_file}"; then
+      in_green "File ${user_config_file} created\nFollow the file's instructions"
+    fi
+  ;;
+esac
+
+

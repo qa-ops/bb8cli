@@ -3,16 +3,15 @@
 SUBCOMMAND_DESC="Subcommand description"
 SUBCOMMAND_HELP=$(cat <<EOH
 
-hello                      Greetings from bb8
+action                      Describe the action
 
 EOH
 )
 
 #Different actions based on arguments
 case ${1} in
-  hello)
-    in_cyan "Hello $(users). I'm here to make your life easier!\n\n"
-    cat "${BB8_IMG}"
+  action)
+    in_cyan "Perform some really cool stuff"
   ;;
 esac
 

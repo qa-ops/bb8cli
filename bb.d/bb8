@@ -1,15 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # vim: ft=sh
 
-use "git"
+use "maintenance"
 
 SUBCOMMAND_DESC="Subcommand description"
 SUBCOMMAND_HELP=$(cat <<EOH
 
 hello                      Greetings from bb8
+update                     Updates bb8 CLI
 
 EOH
 )
+
+BB8_IMG="${ROOT_DIR}/images/bb8"
 
 #Different actions based on arguments
 case ${1} in
@@ -18,7 +21,21 @@ case ${1} in
     cat "${BB8_IMG}"
   ;;
   update)
-    bb8_needs_updating && echo "needs" || echo "dont need"
+    if ! bb8_needs_updating; then
+      in_cyan "BB8 is already at the latest version"
+    else
+      log "BB8 needs updating"
+      in_yellow "You are about to update BB8, do you want to proceed? (Y/n)\n"
+      read -r response
+
+      if [[ $response == "Y" ]]; then
+        in_cyan "Updating BB8"
+        git pull
+      else
+        in_cyan "Update canceled"
+      fi
+    fi
+
   ;;
 esac
 

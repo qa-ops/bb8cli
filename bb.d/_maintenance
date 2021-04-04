@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+function bb8_needs_updating() {
+  log "Checking if bb8 has any new changes"
+  cd "${ROOT_DIR}"
+  git remote update &> /dev/null
+  [[ $(git status | grep -c 'Your branch is up to date') -eq 0 ]]
+}

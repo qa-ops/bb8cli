@@ -6,3 +6,15 @@ function bb8_needs_updating() {
   git remote update &> /dev/null
   [[ $(git status | grep -c 'Your branch is up to date') -eq 0 ]]
 }
+
+function update_bb8() {
+  in_yellow "You are about to update BB8, do you want to proceed? (Y/n)\n"
+  read -r response
+
+  if [[ $response == "Y" ]]; then
+    in_cyan "Updating BB8\n"
+    git pull
+  else
+    in_cyan "Update canceled\n"
+  fi
+}

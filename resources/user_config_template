@@ -2,3 +2,6 @@
 
 #OPTIONS: ssh or https
 export GIT_SSH_PROTOCOL="true"
+
+#uncomment the below line if you want to enable automatic update
+#export ENABLE_AUTOMATIC_UPDATE="true"

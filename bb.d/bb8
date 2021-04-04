@@ -3,7 +3,7 @@
 
 use "maintenance"
 
-SUBCOMMAND_DESC="Subcommand description"
+SUBCOMMAND_DESC="Interacts with the bb8 CLI itself"
 SUBCOMMAND_HELP=$(cat <<EOH
 
 hello                      Greetings from bb8
@@ -16,14 +16,14 @@ BB8_IMG="${ROOT_DIR}/images/bb8"
 
 case ${1} in
   hello)
-    in_cyan "Hello $(users). I'm here to make your life easier!\n\n"
+    in_cyan "Hello $(users). I'm here to help you interact with the QAOps channel!\n\n"
     cat "${BB8_IMG}"
   ;;
   update)
     if bb8_needs_updating; then
       update_bb8
     else
-      in_cyan "BB8 is already at the latest version\n"
+      in_cyan "bb8 is already at the latest version\n"
     fi
   ;;
 esac

@@ -18,9 +18,9 @@ function check_if_installed() {
   type -a "${lib}" &> /dev/null
 
   if [[ $? -ne 0 ]]; then
-    error "${lib} isn't installed in this machine \n${helpmsg}"
+    error "${lib} isn't installed in this machine \n${helpmsg}\n"
   else
-    in_green "${lib} is installed"
+    in_green "${lib} is installed\n"
   fi
 }
 
@@ -31,7 +31,7 @@ function check_if_file_exists() {
   if [[ -e "${file}" ]]; then 
     in_green "${file} file exists\n"
   else
-    error "${file} file does not exist \n${helpmsg}"
+    error "${file} file does not exist \n${helpmsg}\n"
   fi
 }
 
@@ -40,9 +40,9 @@ function check_if_var_exists() {
   local helpmsg="${2:-"You need to setup the cli"}"
 
   if [[ -z "${!var}" ]]; then
-    error "${var} var does not exist\n${helpmsg}"
+    error "${var} var does not exist\n${helpmsg}\n"
   else
-    in_green "${var} var exists"
+    in_green "${var} var exists\n"
   fi
 }
 

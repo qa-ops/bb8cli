@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-function bb8_needs_updating() {
+function _bb8_needs_updating() {
   log "Checking if bb8 has any new changes"
   cd "${ROOT_DIR}"
   git remote update &> /dev/null
   [[ $(git status | grep -c 'Your branch is up to date') -eq 0 ]]
 }
 
-function update_bb8() {
+function _update_bb8() {
   in_yellow "You are about to update bb8, do you want to proceed? (Y/n)\n"
   read -r response
 
@@ -17,4 +17,12 @@ function update_bb8() {
   else
     in_cyan "Update canceled\n"
   fi
+}
+
+function update_bb8_if_needed() {
+  if _bb8_needs_updating; then
+      _update_bb8
+    else
+      in_cyan "bb8 is already at the latest version\n"
+    fi
 }

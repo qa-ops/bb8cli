@@ -12,7 +12,7 @@ update                     Updates bb8 CLI
 EOH
 )
 
-BB8_IMG="${ROOT_DIR}/images/bb8"
+BB8_IMG="${ROOT_DIR}/images/bb8.txt"
 
 case ${1} in
   hello)
@@ -20,11 +20,7 @@ case ${1} in
     cat "${BB8_IMG}"
   ;;
   update)
-    if bb8_needs_updating; then
-      update_bb8
-    else
-      in_cyan "bb8 is already at the latest version\n"
-    fi
+    update_bb8_if_needed
   ;;
 esac
 

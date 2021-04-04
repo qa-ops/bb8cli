@@ -60,7 +60,7 @@ case ${1} in
 
     user_config_file="${USER_CONFIG_FILE}"
 
-    if cp -i "${RESOURCE_DIR}/user_setup_template" "${user_config_file}"; then
+    if cp -i "${RESOURCE_DIR}/user_config_template" "${user_config_file}"; then
       in_green "File ${user_config_file} created\nFollow the file's instructions"
     fi
   ;;

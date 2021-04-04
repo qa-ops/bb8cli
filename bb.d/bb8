@@ -1,0 +1,24 @@
+#!/bin/bash
+# vim: ft=sh
+
+use "git"
+
+SUBCOMMAND_DESC="Subcommand description"
+SUBCOMMAND_HELP=$(cat <<EOH
+
+hello                      Greetings from bb8
+
+EOH
+)
+
+#Different actions based on arguments
+case ${1} in
+  hello)
+    in_cyan "Hello $(users). I'm here to make your life easier!\n\n"
+    cat "${BB8_IMG}"
+  ;;
+  update)
+    bb8_needs_updating && echo "needs" || echo "dont need"
+  ;;
+esac
+

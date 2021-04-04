@@ -20,7 +20,11 @@ case ${1} in
     cat "${BB8_IMG}"
   ;;
   update)
-    update_bb8_if_needed
+    if bb8_needs_updating; then
+      update_bb8
+    else
+      in_cyan "bb8 is already at the latest version\n"
+    fi
   ;;
 esac
 

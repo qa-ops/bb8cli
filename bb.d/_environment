@@ -36,8 +36,3 @@ export RESOURCE_DIR="${ROOT_DIR}/resources"
 #loads user_config specific configuration
 [[ -e "${CONFIGURATION_DIR}/user_config" ]] && source "${CONFIGURATION_DIR}/user_config"
 
-if [[ "${ENABLE_AUTOMATIC_UPDATE}" == "true" ]]; then
-  if update_bb8_if_needed; then
-    in_green "Updated"
-  fi
-fi

@@ -2,11 +2,6 @@
 # vim: ft=sh
 
 SUBCOMMAND_DESC="File that exemplifies the usage of the handle_interface"
-SUBCOMMAND_HELP=$(cat <<EOH
-This file is used by the 'date' command,
-and cannot be called directly
-EOH
-)
 
 # takes a UNIX timestamp and returns formatted
 # using linux date

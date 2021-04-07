@@ -22,3 +22,6 @@ function vcs_update() {
   ${SUBCOMMANDS_DIR}/tools/sweepwip -d ${PROJECTS_DIR} -ku
 }
 
+function last_commit_timestamp() {
+  git show -s --format=%cd
+}

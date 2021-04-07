@@ -2,6 +2,7 @@
 # vim: ft=sh
 
 use "maintenance"
+use "git"
 
 SUBCOMMAND_DESC="Interacts with the bb8 CLI itself"
 SUBCOMMAND_HELP=$(cat <<EOH
@@ -14,10 +15,6 @@ EOH
 )
 
 BB8_IMG="${ROOT_DIR}/images/bb8.txt"
-
-function last_commit_timestamp() {
-  git show -s --format=%cd
-}
 
 case ${1} in
   hello)
@@ -37,7 +34,6 @@ case ${1} in
     else
       in_cyan "bb8 is already at the latest version\n"
     fi
-
   ;;
 esac
 

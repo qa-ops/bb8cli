@@ -7,12 +7,17 @@ SUBCOMMAND_DESC="Interacts with the bb8 CLI itself"
 SUBCOMMAND_HELP=$(cat <<EOH
 
 hello                      Greetings from bb8
+status                     Shows if bb8 needs updating
 update                     Updates bb8 CLI
 
 EOH
 )
 
 BB8_IMG="${ROOT_DIR}/images/bb8.txt"
+
+function last_commit_timestamp() {
+  git show -s --format=%cd
+}
 
 case ${1} in
   hello)
@@ -26,5 +31,14 @@ case ${1} in
       in_cyan "bb8 is already at the latest version\n"
     fi
   ;;
+  status)
+    if bb8_needs_updating; then
+      in_yellow "bb8 is out of date\nThe current code is from $(last_commit_timestamp)"
+    else
+      in_cyan "bb8 is already at the latest version\n"
+    fi
+
+  ;;
 esac
+
 

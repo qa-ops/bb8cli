@@ -1,4 +1,3 @@
-#!/bin/bash
 # vim: ft=sh
 SUBCOMMAND_DESC="Useful URL list"
 

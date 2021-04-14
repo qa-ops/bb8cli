@@ -1,4 +1,3 @@
-#!/bin/bash
 # vim: ft=sh spell
 SUBCOMMAND_DESC="${MAIN_COMMAND} documentation"
 SUBCOMMAND_HELP=$(cat <<EOH
@@ -21,6 +20,11 @@ handle_interface           This should be called by the general
 
 load_conf                  Function which loads external configuration
                            for subcommands.
+
+twin                       Information about having a copy of this
+                           tool so it can be extended to your project.
+                           Without needing to actually copy and change
+                           the ${MAIN_COMMAND} code.
 
 EOH
 )
@@ -140,6 +144,49 @@ available to the subcommand that called 'load_conf' as a read-only variable. The
 reason for be a read-only is just to avoid values being change indirectly and
 causing confusion. It is possible to lift this restriction if needed. See
 the 'url' subcommand for an example of this function in use.
+
+END_OF_DOC
+}
+
+function doc_twin() {
+  less -R <<END_OF_DOC
+$(__less_notice)
+twin - having a copy of ${MAIN_COMMAND} to extend for your project
+
+The sole purpose of this CLI is to provide quick shortcuts for day to day
+development. But projects are fundamentally different regarding their
+technology stacks and team practices. So whatever is provided as default
+commands and actions will not be enough for any sizable project and this is
+where the idea of a 'twin' comes up.
+
+A twin is basically the same CLI tool but with different subcommands and
+configurations that are particular for a project. The main difference is that
+instead of calling this CLI by one name you called it by another, and define
+different directories for configurations and subcommands. For example:
+
+Let's create a twin CLI called 'snap', the first thing is to create a symbolic
+link with our new tool name:
+
+ln -s ${MAIN_COMMAND} snap
+
+Now if you call 'snap' instead of ${MAIN_COMMAND} you will see that it does
+all the same things it did before. This is because is still reading from
+the same directories. Let's change this exporting two directories:
+
+export SNAP_CONF_DIR=/some/dir/snap/conf
+export SNAP_SUBCMD_DIR=/some/dir/snap/subcommands
+
+If you call 'snap' this time it will not show any subcommands (assuming the
+directories are empty). You can now extend the behavior of your new tool by
+creating subcommands and configurations as you see fit.
+
+What about extending? If you want to bring all files from ${MAIN_COMMAND} to
+your snap tool and only create new commands you can use:
+
+${MAIN_COMMAND} twin update
+
+This command will copy all files to your new tool and you can extend them and
+grow your own CLI.
 
 END_OF_DOC
 }

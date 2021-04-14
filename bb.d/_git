@@ -1,12 +1,4 @@
-#!/bin/bash
 # vim: ft=sh
-
-SUBCOMMAND_DESC="Abstraction to handle bulk git commands"
-SUBCOMMAND_HELP=$(cat <<EOH
-This file is used by the 'vcs' command,
-and cannot be called directly
-EOH
-)
 
 # This is a implementation for the 'vcs' subcommand
 # using git
@@ -20,8 +12,4 @@ function vcs_status() {
 
 function vcs_update() {
   ${SUBCOMMANDS_DIR}/tools/sweepwip -d ${PROJECTS_DIR} -ku
-}
-
-function last_commit_timestamp() {
-  git show -s --format=%cd
 }

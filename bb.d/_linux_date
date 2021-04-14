@@ -1,7 +1,4 @@
-#!/bin/bash
 # vim: ft=sh
-
-SUBCOMMAND_DESC="File that exemplifies the usage of the handle_interface"
 
 # takes a UNIX timestamp and returns formatted
 # using linux date

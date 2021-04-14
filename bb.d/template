@@ -1,17 +1,16 @@
-#!/bin/bash
 # vim: ft=sh
 SUBCOMMAND_DESC="Subcommand description"
 SUBCOMMAND_HELP=$(cat <<EOH
 
-action                      Describe the action
+action                      Action documentation
 
 EOH
 )
 
 #Different actions based on arguments
 case ${1} in
-  action)
-    in_cyan "Perform some really cool stuff"
+  hello)
+    echo "Hello World!"
   ;;
 esac
 

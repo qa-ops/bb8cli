@@ -2,5 +2,5 @@
 # Use simple names as keys so that is easy to recall
 # like "board" to point to your team story board.
 
-list[bash_faq]='http://mywiki.wooledge.org/BashFAQ'
-list[dev_cheat_sheet]='https://devhints.io/'
+list[jira]='https://www.atlassian.com/software/jira'
+list[git]='https://github.com'

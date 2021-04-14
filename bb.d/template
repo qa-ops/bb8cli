@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # vim: ft=sh
 SUBCOMMAND_DESC="Subcommand description"
 SUBCOMMAND_HELP=$(cat <<EOH
@@ -9,7 +10,7 @@ EOH
 
 #Different actions based on arguments
 case ${1} in
-  hello)
+  action)
     echo "Hello World!"
   ;;
 esac

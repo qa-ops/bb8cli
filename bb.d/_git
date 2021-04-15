@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # vim: ft=sh
 
+SUBCOMMAND_DESC="This is a implementation for the 'vcs' subcommand using git"
+
 # This is a implementation for the 'vcs' subcommand
 # using git
 

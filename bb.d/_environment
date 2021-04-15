@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # vim: ft=sh sw=2 ts=2 expandtab
-SUBCOMMAND_DESC="Environment loaded for all  commands"
+SUBCOMMAND_DESC="Environment loaded for all commands"
 SUBCOMMAND_HELP=$(cat <<EOH
 This file is loaded before calling other subcommands,
 variables and functions will be available to all

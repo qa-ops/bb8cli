@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # vim: ft=sh
 
+SUBCOMMAND_DESC="This is a implementation for the 'date' subcommand on linux"
+
 # takes a UNIX timestamp and returns formatted
 # using linux date
 function date_to_date() {

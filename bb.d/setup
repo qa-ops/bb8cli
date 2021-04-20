@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# vim: ft=sh
+SUBCOMMAND_DESC="Helps setup the bb8cli"
+SUBCOMMAND_HELP=$(cat <<EOH
+
+check                      Check if the bb8 has been setup
+
+EOH
+)
+
+function check_if_installed() {
+  local lib=${1}
+  local help_msg=${2:-"please install it"}
+
+  log "The value help_msg: ${help_msg}"
+
+  type -a "${lib}" &> /dev/null
+
+  if [[ $? -ne 0 ]]; then
+    error "${lib} is not installed in this machine \n${help_msg}"
+  else
+    in_green "${lib} is installed"
+  fi
+}
+
+#Different actions based on arguments
+case ${1} in
+  check)
+    in_cyan "Check if all necessary software has been installed\n"
+    check_if_installed "git"
+  ;;
+esac

@@ -29,3 +29,8 @@ function open_file() {
 # Example, force Java to version 1.7 for all subcomands.
 # export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
 export BB8_IMG="${ROOT_DIR}/images/bb8.txt"
+export RESOURCES_DIR="${ROOT_DIR}/resources"
+export USER_CONFIG_FILE="${CONFIGURATION_DIR}/user_config"
+
+#load users specific configuration
+[[ -e "${USER_CONFIG_FILE}" ]] && source "${USER_CONFIG_FILE}"

@@ -4,9 +4,12 @@ SUBCOMMAND_DESC="Helps setup the bb8cli"
 SUBCOMMAND_HELP=$(cat <<EOH
 
 check                      Check if the bb8 has been setup
+user                       Creates the user configuration file
 
 EOH
 )
+
+USER_CONFIG_FILE_TEMPLATE="${RESOURCES_DIR}/user_config_template"
 
 function check_if_installed() {
   local lib=${1}
@@ -28,5 +31,12 @@ case ${1} in
   check)
     in_cyan "Check if all necessary software has been installed\n"
     check_if_installed "git"
+    echo "${GIT_SSH_PROTOCOL}"
+  ;;
+  user)
+    in_cyan "Creating the user config file in ${CONFIGURATION_DIR}\n"
+    if cp -i "${USER_CONFIG_FILE_TEMPLATE}" "${USER_CONFIG_FILE}"; then
+      in_green "File ${USER_CONFIG_FILE} created\nFollow the file's instructions"
+    fi
   ;;
 esac

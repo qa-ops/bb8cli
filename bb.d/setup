@@ -20,18 +20,31 @@ function check_if_installed() {
   type -a "${lib}" &> /dev/null
 
   if [[ $? -ne 0 ]]; then
-    error "${lib} is not installed in this machine \n${help_msg}"
+    in_red "${lib} is not installed in this machine \n${help_msg}"
   else
-    in_green "${lib} is installed"
+    in_green "${lib} is installed\n"
   fi
+}
+
+function check_if_file_exists() {
+  local file="${1}"
+    local help_msg=${2:-"file is missing."}
+
+    if [[ -e "${file}" ]]; then
+      in_green "${file} file exists"
+    else
+      in_red "${file} file does not exist.\n${help_msg}"
+    fi
 }
 
 #Different actions based on arguments
 case ${1} in
   check)
-    in_cyan "Check if all necessary software has been installed\n"
+    session_title "Check if all necessary software has been installed"
     check_if_installed "git"
-    echo "${GIT_SSH_PROTOCOL}"
+
+    session_title "Check if all necessary configuration has been done"
+    check_if_file_exists "${USER_CONFIG_FILE}" "Execute the command '${MAIN_COMMAND} ${SUBCOMMAND} user'"
   ;;
   user)
     in_cyan "Creating the user config file in ${CONFIGURATION_DIR}\n"

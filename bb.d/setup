@@ -22,19 +22,33 @@ function check_if_installed() {
   if [[ $? -ne 0 ]]; then
     in_red "${lib} is not installed in this machine \n${help_msg}"
   else
-    in_green "${lib} is installed\n"
+    in_green "${lib} is installed"
   fi
 }
 
 function check_if_file_exists() {
   local file="${1}"
-    local help_msg=${2:-"file is missing."}
+  local help_msg=${2:-"file is missing."}
 
     if [[ -e "${file}" ]]; then
       in_green "${file} file exists"
     else
       in_red "${file} file does not exist.\n${help_msg}"
     fi
+}
+
+function check_if_var_exists() {
+  local var="${1}"
+  local help_msg=${2:-"You need to setup the cli."}
+
+  log "The value of ${var}: ${!var}"
+
+  if [[ -n "${!var}" ]]; then
+    in_green "${var} var exists"
+  else
+    in_red "${var} var does not exist\n${help_msg}"
+  fi
+
 }
 
 #Different actions based on arguments
@@ -45,9 +59,12 @@ case ${1} in
 
     session_title "Check if all necessary configuration has been done"
     check_if_file_exists "${USER_CONFIG_FILE}" "Execute the command '${MAIN_COMMAND} ${SUBCOMMAND} user'"
+
+    session_title "Check if all variables were set"
+    check_if_var_exists "GIT_SSH_PROTOCOL" "Make sure the ${USER_CONFIG_FILE} has this variable."
   ;;
   user)
-    in_cyan "Creating the user config file in ${CONFIGURATION_DIR}\n"
+    in_cyan "Creating the user config file in ${CONFIGURATION_DIR}"
     if cp -i "${USER_CONFIG_FILE_TEMPLATE}" "${USER_CONFIG_FILE}"; then
       in_green "File ${USER_CONFIG_FILE} created\nFollow the file's instructions"
     fi

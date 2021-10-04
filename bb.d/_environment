@@ -29,9 +29,9 @@ function open_file() {
 function session_title() {
   local title="${1}"
 
-  in_cyan "\n=======================================================\n"
+  in_cyan "\n======================================================="
   in_cyan "${title}"
-  in_cyan "\n=======================================================\n"
+  in_cyan "======================================================="
 }
 
 # Example, force Java to version 1.7 for all subcomands.

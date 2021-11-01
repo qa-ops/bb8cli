@@ -26,25 +26,11 @@ function check_if_installed() {
   fi
 }
 
-function check_if_file_exists() {
-  local file="${1}"
-    local help_msg=${2:-"file is missing."}
-
-    if [[ -e "${file}" ]]; then
-      in_green "${file} file exists"
-    else
-      in_red "${file} file does not exist.\n${help_msg}"
-    fi
-}
-
 #Different actions based on arguments
 case ${1} in
   check)
     session_title "Check if all necessary software has been installed"
     check_if_installed "git"
-
-    session_title "Check if all necessary configuration has been done"
-    check_if_file_exists "${USER_CONFIG_FILE}" "Execute the command '${MAIN_COMMAND} ${SUBCOMMAND} user'"
   ;;
   user)
     in_cyan "Creating the user config file in ${CONFIGURATION_DIR}\n"

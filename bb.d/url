@@ -30,13 +30,4 @@ case ${1} in
   show)
     _show_all
   ;;
-  open)
-    log "Alias given '${2}'"
-    [[ -n ${list[${2}]} ]] && open_file ${list[${2}]} || _show_all
-  ;;
-  *)
-    [[ -z ${1} ]] && return # early return when no argument is given
-    log "Alias given '${1}'"
-    [[ -n ${list[${1}]} ]] && open_file ${list[${1}]} || _show_all
-  ;;
 esac

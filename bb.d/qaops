@@ -30,5 +30,17 @@ case ${1} in
   show)
     _show_all
   ;;
+  open)
+    alias="${2}"
+    log "Alias given ${alias}"
+    [[ -n "${repos[${alias}]}" ]] && open_file "${repos[${alias}]}" || _show_all
+  ;;
+  *)
+    alias="${1}"
+    [[ -z "${alias}" ]] && return
+
+    log "Alias given ${alias}"
+    [[ -n "${repos[${alias}]}" ]] && open_file "${repos[${alias}]}" || _show_all
+  ;;
 esac
 

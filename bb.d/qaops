@@ -18,14 +18,12 @@ show                      List all repos
 open <ALIAS>              Open the repository in the browser
 ALIAS                     The same as "open <ALIAS>"
 download <ALIAS>          Will download repo of the choosen ALIAS to the parent folder of this CLI
+                            If <ALIAS> not given, all repositories will be downloaded
 
 $(_show_all)
 
 EOH
 )
-
-#repos[java]='https://github.com/qa-ops/qaops-automation-api'
-#repos[docs]='https://github.com/qa-ops/docs'
 
 function download_repo() {
   local repo="${1}"
@@ -45,6 +43,23 @@ function download_repo() {
   fi
 }
 
+function download_all_repo() {
+  in_cyan "You are about to download ${#repos[@]} repositories. Are you sure? (y/n)"
+  read -r response
+
+  if [[ "${response}" != "y" ]]; then
+    in_yellow "Download cancelled"
+    exit 0
+  fi
+
+  in_cyan "Downloading all repos"
+
+  for repo in "${!repos[@]}"; do
+    download_repo "${repo}"
+    echo -e "\n"
+  done
+}
+
 #Different actions based on arguments
 case ${1} in
   show)
@@ -59,7 +74,11 @@ case ${1} in
     repo="${2}"
     log "Repo given: ${repo}"
 
-    [[ -n "${repos[${repo}]}" ]] && download_repo "${repo}"
+    if [[ -n "${repo}" ]]; then
+      download_repo "${repo}"
+    else
+      download_all_repo
+    fi
   ;;
   *)
     alias="${1}"

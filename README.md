@@ -1,6 +1,6 @@
 #### Selecione sua Língua | Select your Language
 <a href='#requisitos'><img src="images/pt-br.png" alt="Português" width="50" /></a>
-<a href='#requirements'><img src="images/en.jpg" alt="English" width="50" /></a>
+<a href='#requirements'><img src="images/en.jpeg" alt="English" width="50" /></a>
 
 
 ## Requisitos

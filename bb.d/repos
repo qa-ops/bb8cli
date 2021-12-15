@@ -19,11 +19,17 @@ open <ALIAS>              Open the repository in the browser
 ALIAS                     The same as "open <ALIAS>"
 download <ALIAS>          Will download repo of the choosen ALIAS to the parent folder of this CLI
                             If <ALIAS> not given, all repositories will be downloaded
+install [libs | sws]      Install either libraries or software necessary for working with all QaOps projects
+                            - libs -> install all libraries
+                            - sws -> install all softwares
 
 $(_show_all)
 
 EOH
 )
+
+REPOS_LIBRARIES="${RESOURCES_DIR}/dependencies/repos-libraries"
+REPOS_SOFTWARES="${RESOURCES_DIR}/dependencies/repos-softwares"
 
 function download_repo() {
   local repo="${1}"
@@ -60,6 +66,26 @@ function download_all_repo() {
   done
 }
 
+function install_libraries() {
+  in_cyan "Installing all libraries necessary to run all projects"
+
+  IFS=$'\n' read -d '' -r -a libraries < "${REPOS_LIBRARIES}"
+
+  for lib in "${libraries[@]}"; do
+    brew install "${lib}"
+  done
+}
+
+function install_softwares() {
+  in_cyan "Installing all softwares necessary to run all projects"
+
+  IFS=$'\n' read -d '' -r -a softwares < "${REPOS_SOFTWARES}"
+
+  for sw in "${softwares[@]}"; do
+    brew install "${sw}"
+  done
+}
+
 #Different actions based on arguments
 case ${1} in
   show)
@@ -78,6 +104,19 @@ case ${1} in
       download_repo "${repo}"
     else
       download_all_repo
+    fi
+  ;;
+  install)
+    choice="${2}"
+
+    log "Choice given: ${choice}"
+
+    if [[ "${choice}" == "libs" ]]; then
+      install_libraries
+    elif [[ "${choice}" == "sws" ]]; then
+      install_softwares
+    else
+      in_yellow "Please give a valid option"
     fi
   ;;
   *)

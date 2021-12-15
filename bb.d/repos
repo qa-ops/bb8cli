@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-load_conf repos
+load_conf list
 
 function _show_all() {
   in_cyan "\nList of all repository:"
   printf "%-20s %s\n" "ALIAS" "URL"
   printf "\n"
-  for name in "${!repos[@]}"; do
-    printf "%-20s %s\n" "${name}" "${repos[${name}]}"
+  for name in "${!list[@]}"; do
+    printf "%-20s %s\n" "${name}" "${list[${name}]}"
   done | sort
 }
 
@@ -29,7 +29,7 @@ function download_repo() {
   local repo="${1}"
   in_cyan "Cloning repo: ${repo} to ${PROJECTS_DIR}"
 
-  repo_name="${repos[${repo}]##*/}"
+  repo_name="${list[${repo}]##*/}"
   log "The repo name found is: ${repo_name}"
 
   [[ -z "${GIT_SSH_PROTOCOL}" ]] && error "user config not found. \nPlease execute 'bb setup check'"
@@ -39,12 +39,12 @@ function download_repo() {
     git clone "git@github.com:qa-ops/${repo_name}.git" "${PROJECTS_DIR}/${repo_name}"
   else
     log "Cloning ${repo_name} using HTTPS"
-    git clone "${repos[${repo}]}" "${PROJECTS_DIR}/${repo_name}"
+    git clone "${list[${repo}]}" "${PROJECTS_DIR}/${repo_name}"
   fi
 }
 
 function download_all_repo() {
-  in_cyan "You are about to download ${#repos[@]} repositories. Are you sure? (y/n)"
+  in_cyan "You are about to download ${#list[@]} repositories. Are you sure? (y/n)"
   read -r response
 
   if [[ "${response}" != "y" ]]; then
@@ -54,7 +54,7 @@ function download_all_repo() {
 
   in_cyan "Downloading all repos"
 
-  for repo in "${!repos[@]}"; do
+  for repo in "${!list[@]}"; do
     download_repo "${repo}"
     echo -e "\n"
   done
@@ -68,7 +68,7 @@ case ${1} in
   open)
     alias="${2}"
     log "Alias given ${alias}"
-    [[ -n "${repos[${alias}]}" ]] && open_file "${repos[${alias}]}" || _show_all
+    [[ -n "${list[${alias}]}" ]] && open_file "${list[${alias}]}" || _show_all
   ;;
   download)
     repo="${2}"
@@ -85,7 +85,7 @@ case ${1} in
     [[ -z "${alias}" ]] && return
 
     log "Alias given ${alias}"
-    [[ -n "${repos[${alias}]}" ]] && open_file "${repos[${alias}]}" || _show_all
+    [[ -n "${list[${alias}]}" ]] && open_file "${list[${alias}]}" || _show_all
   ;;
 esac
 

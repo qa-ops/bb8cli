@@ -1,4 +1,0 @@
-repos[cucumber]='https://github.com/qa-ops/bdd-automation-api'
-repos[shell]='https://github.com/qa-ops/shell-script'
-repos[java]='https://github.com/qa-ops/qaops-automation-api'
-repos[docs]='https://github.com/qa-ops/docs'

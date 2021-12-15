@@ -2,6 +2,8 @@
 load_conf list
 load_conf install_options
 
+use "repos"
+
 function _show_all() {
   in_cyan "\nList of all repository:"
   printf "%-20s %s\n" "ALIAS" "URL"
@@ -29,63 +31,6 @@ $(_show_all)
 EOH
 )
 
-REPOS_LIBRARIES="${RESOURCES_DIR}/dependencies/repos-libraries"
-REPOS_SOFTWARES="${RESOURCES_DIR}/dependencies/repos-softwares"
-
-function download_repo() {
-  local repo="${1}"
-  in_cyan "Cloning repo: ${repo} to ${PROJECTS_DIR}"
-
-  repo_name="${list[${repo}]##*/}"
-  log "The repo name found is: ${repo_name}"
-
-  [[ -z "${GIT_SSH_PROTOCOL}" ]] && error "user config not found. \nPlease execute 'bb setup check'"
-
-  if [[ "${GIT_SSH_PROTOCOL}" == "true" ]]; then
-    log "Cloning ${repo_name} using SSH"
-    git clone "git@github.com:qa-ops/${repo_name}.git" "${PROJECTS_DIR}/${repo_name}"
-  else
-    log "Cloning ${repo_name} using HTTPS"
-    git clone "${list[${repo}]}" "${PROJECTS_DIR}/${repo_name}"
-  fi
-}
-
-function download_all_repo() {
-  in_cyan "You are about to download ${#list[@]} repositories. Are you sure? (y/n)"
-  read -r response
-
-  if [[ "${response}" != "y" ]]; then
-    in_yellow "Download cancelled"
-    exit 0
-  fi
-
-  in_cyan "Downloading all repos"
-
-  for repo in "${!list[@]}"; do
-    download_repo "${repo}"
-    echo -e "\n"
-  done
-}
-
-function install_libraries() {
-  in_cyan "Installing all libraries necessary to run all projects"
-
-  IFS=$'\n' read -d '' -r -a libraries < "${REPOS_LIBRARIES}"
-
-  for lib in "${libraries[@]}"; do
-    brew install "${lib}"
-  done
-}
-
-function install_softwares() {
-  in_cyan "Installing all softwares necessary to run all projects"
-
-  IFS=$'\n' read -d '' -r -a softwares < "${REPOS_SOFTWARES}"
-
-  for sw in "${softwares[@]}"; do
-    brew install "${sw}"
-  done
-}
 
 #Different actions based on arguments
 case ${1} in

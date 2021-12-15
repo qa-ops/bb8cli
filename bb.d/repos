@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 load_conf list
+load_conf install_options
 
 function _show_all() {
   in_cyan "\nList of all repository:"
@@ -86,10 +87,6 @@ function install_softwares() {
   done
 }
 
-function foo() {
-  echo "algo"
-}
-
 #Different actions based on arguments
 case ${1} in
   show)
@@ -128,17 +125,12 @@ case ${1} in
 
       log "Choice given: ${choice}"
 
-      declare -A array_options
-      array_options["libs"]="install_libraries"
-      array_options["sws"]="install_softwares"
-
-      if [[ ! ${array_options["${choice}"]} ]]; then
+      if [[ ! ${install_options["${choice}"]} ]]; then
         in_yellow "Please give a valid option"
         exit 0
       fi
 
-      eval ${array_options["${choice}"]}
-
+      eval "${install_options[${choice}]}"
     ;;
   *)
     alias="${1}"

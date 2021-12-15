@@ -129,15 +129,15 @@ case ${1} in
       log "Choice given: ${choice}"
 
       declare -A array_choice
-      array_choice[libs]="install_libraries"
-      array_choice[sws]="install_softwares"
+      array_options[libs]="install_libraries"
+      array_options[sws]="install_softwares"
 
-      if [[ ! ${array_choice["${choice}"]} ]]; then
+      if [[ ! ${array_options["${choice}"]} ]]; then
         in_yellow "Please give a valid option"
         exit 0
       fi
 
-      eval ${array_choice["${choice}"]}
+      eval ${array_options["${choice}"]}
 
     ;;
   *)

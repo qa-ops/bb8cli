@@ -86,6 +86,10 @@ function install_softwares() {
   done
 }
 
+function foo() {
+  echo "algo"
+}
+
 #Different actions based on arguments
 case ${1} in
   show)
@@ -119,6 +123,23 @@ case ${1} in
       in_yellow "Please give a valid option"
     fi
   ;;
+  install-v2)
+      choice="${2}"
+
+      log "Choice given: ${choice}"
+
+      declare -A array_choice
+      array_choice[libs]="install_libraries"
+      array_choice[sws]="install_softwares"
+
+      if [[ ! ${array_choice["${choice}"]} ]]; then
+        in_yellow "Please give a valid option"
+        exit 0
+      fi
+
+      eval ${array_choice["${choice}"]}
+
+    ;;
   *)
     alias="${1}"
     [[ -z "${alias}" ]] && return

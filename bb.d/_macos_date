@@ -1,4 +1,7 @@
+#!/usr/bin/env bash
 # vim: ft=sh
+
+SUBCOMMAND_DESC="This is a implementation for the 'date' subcommand on macos"
 
 # takes a UNIX timestamp and returns formatted
 # using macos_date

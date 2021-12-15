@@ -6,11 +6,11 @@ declare -r PROJECTS_DIR="$(cd ${ROOT_DIR}/.. && pwd)"
 
 # color output functions
 function _color()     { tput -Txterm setaf ${1}; echo -ne ${2}; tput -Txterm sgr0; }
-function in_red()     { _color 1 "${1}"; } # use for failures
-function in_green()   { _color 2 "${1}"; } # use for successes
-function in_yellow()  { _color 3 "${1}"; } # use for warnings / attention
-function in_magenta() { _color 5 "${1}"; } # use for debug messages
-function in_cyan()    { _color 6 "${1}"; } # use for main actions / progress
+function in_red()     { _color 1 "${1}\n"; } # use for failures
+function in_green()   { _color 2 "${1}\n"; } # use for successes
+function in_yellow()  { _color 3 "${1}\n"; } # use for warnings / attention
+function in_magenta() { _color 5 "${1}\n"; } # use for debug messages
+function in_cyan()    { _color 6 "${1}\n"; } # use for main actions / progress
 
 function __box() {
   echo "$(in_cyan '[')$(echo "${1}" )$(in_cyan ']')"

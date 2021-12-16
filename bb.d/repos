@@ -81,7 +81,7 @@ case ${1} in
     alias="${1}"
     [[ -z "${alias}" ]] && return
 
-    log "Alias given ${alias}"
+    echo "Alias given ${alias}"
     [[ -n "${list[${alias}]}" ]] && open_file "${list[${alias}]}" || _show_all
   ;;
 esac

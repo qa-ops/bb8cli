@@ -1,0 +1,4 @@
+list[cucumber]='https://github.com/qa-ops/bdd-automation-api'
+list[shell]='https://github.com/qa-ops/shell-script'
+list[java]='https://github.com/qa-ops/qaops-automation-api'
+list[docs]='https://github.com/qa-ops/docs'

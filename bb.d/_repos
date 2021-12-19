@@ -1,0 +1,96 @@
+REPOS_LIBRARIES="${RESOURCES_DIR}/dependencies/repos_libraries"
+REPOS_SOFTWARES="${RESOURCES_DIR}/dependencies/repos_softwares"
+
+function __which_dependencies_to_install() {
+  local choice="${1}"
+  local target_computer="${2}"
+
+  log "The choice received: ${choice}"
+  log "The computer to install is: ${target_computer}"
+
+  if [[ "${choice}" == "libs" ]]; then
+    brew_install "${REPOS_LIBRARIES}_${target_computer}"
+  elif [[ "${choice}" == "sws" ]]; then
+    brew_install "${REPOS_SOFTWARES}_${target_computer}"
+  else
+    in_yellow "Please give a valid option"
+  fi
+}
+
+function download_repo() {
+  local repo="${1}"
+  in_cyan "Cloning repo: ${repo} to ${PROJECTS_DIR}"
+
+  repo_name="${list[${repo}]##*/}"
+  log "The repo name found is: ${repo_name}"
+
+  [[ -z "${GIT_SSH_PROTOCOL}" ]] && error "user config not found. \nPlease execute 'bb setup check'"
+
+  if [[ "${GIT_SSH_PROTOCOL}" == "true" ]]; then
+    log "Cloning ${repo_name} using SSH"
+    git clone "git@github.com:qa-ops/${repo_name}.git" "${PROJECTS_DIR}/${repo_name}"
+  else
+    log "Cloning ${repo_name} using HTTPS"
+    git clone "${list[${repo}]}" "${PROJECTS_DIR}/${repo_name}"
+  fi
+}
+
+function download_all_repo() {
+  in_cyan "You are about to download ${#list[@]} repositories. Are you sure? (y/n)"
+  read -r response
+
+  if [[ "${response}" != "y" ]]; then
+    in_yellow "Download cancelled"
+    exit 0
+  fi
+
+  in_cyan "Downloading all repos"
+
+  for repo in "${!list[@]}"; do
+    download_repo "${repo}"
+    echo -e "\n"
+  done
+}
+
+function brew_install() {
+  local file_to_install="${1}"
+  in_cyan "Installing all content in ${file_to_install}"
+
+  IFS=$'\n' read -d '' -r -a contents < "${file_to_install}"
+
+  for line in "${contents[@]}"; do
+    brew install "${line}"
+  done
+}
+
+function install_dependencies() {
+  choice="${1}"
+
+  user=$(users)
+  target_computer="personal"
+
+  log "The user accessing it is: ${user}"
+
+  if [[ "${user}" == "rafael.lima" ]]; then
+    target_computer="work"
+  fi
+
+  log "The target computer is: ${target_computer}"
+
+  __which_dependencies_to_install "${choice}" "${target_computer}"
+}
+
+function install_dependencies_v2() {
+  local choice="${1}"
+
+  user=$(users)
+  user="rafa"
+
+  log "The user accessing it is: ${user}"
+
+  target_computer="${user_options[${user}]}"
+
+  log "The target computer is: ${target_computer}"
+
+  __which_dependencies_to_install "${choice}" "${target_computer}"
+}

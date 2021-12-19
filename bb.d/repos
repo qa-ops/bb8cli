@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 load_conf list
+load_conf user_options
 
 function _show_all() {
   in_cyan "\nList of all repository:"
@@ -100,6 +101,26 @@ function install_dependencies() {
   fi
 }
 
+function install_dependencies_v2() {
+  local choice="${1}"
+
+  user=$(users)
+
+  log "The user accessing it is: ${user}"
+
+  target_computer="${user_options[${user}]}"
+
+  log "The target computer is: ${target_computer}"
+
+  if [[ "${choice}" == "libs" ]]; then
+    brew_install "${REPOS_LIBRARIES}_${target_computer}"
+  elif [[ "${choice}" == "sws" ]]; then
+    brew_install "${REPOS_SOFTWARES}_${target_computer}"
+  else
+    in_yellow "Please give a valid option"
+  fi
+}
+
 
 #Different actions based on arguments
 case ${1} in
@@ -126,6 +147,12 @@ case ${1} in
     log "Choice given: ${choice}"
 
     install_dependencies "${choice}"
+  ;;
+  install-v2)
+    choice="${2}"
+    log "Choice given: ${choice}"
+
+    install_dependencies_v2 "${choice}"
   ;;
   *)
     alias="${1}"

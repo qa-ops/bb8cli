@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# vim: ft=sh
+SUBCOMMAND_DESC="Description of the awesome new subcommand"
+SUBCOMMAND_HELP=$(cat <<EOH
+
+action                      Description of the action
+
+EOH
+)
+
+#Different actions based on arguments
+case ${1} in
+  action)
+    in_cyan "Hello $(users). This is an example of a new subcommand"
+  ;;
+esac
+

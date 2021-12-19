@@ -5,9 +5,14 @@ SUBCOMMAND_HELP=$(cat <<EOH
 
 hello                      Greetings from bb8
 update                     Updates bb8 CLI
+new-cmd <CMD_NAME>         Create a new subcommand in the bb8 cli
+                            - CMD_NAME -> name of the new subcommand
+
 
 EOH
 )
+
+NEW_SUBCOMMAND_TEMPLATE="${RESOURCES_DIR}/new_subcommand_template"
 
 function bb8_needs_updating() {
   in_cyan "Checking if bb8 has any new changes"
@@ -44,6 +49,20 @@ case ${1} in
       update_bb8
     else
       in_cyan "bb8 is already at the latest version"
+    fi
+  ;;
+  new-cmd)
+    subcommand_name="${2}"
+    if [[ -z "${subcommand_name}" ]]; then
+      in_yellow "You need to specify the name of the new subcommand"
+      exit 0
+    fi
+
+    in_cyan "Creating a new subcommand called ${subcommand_name}"
+    if cp -i "${NEW_SUBCOMMAND_TEMPLATE}" "${SUBCOMMANDS_DIR}/${subcommand_name}"; then
+      in_green "Command '${subcommand_name}' created. You now can execute '${MAIN_COMMAND} ${subcommand_name}'"
+    else
+      in_red "Failed to created subcommand '${subcommand_name}'"
     fi
   ;;
 esac

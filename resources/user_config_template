@@ -3,5 +3,8 @@
 #OPTIONS: true or false
 export GIT_SSH_PROTOCOL="true"
 
+#OPTIONS: br or en
+#export USER_LANGUAGE="br"
+
 #uncomment the below lone if you want to enable automatic update
 #export ENABLE_AUTOMATIC_UPDATE="true"

@@ -17,33 +17,11 @@ SUBCOMMAND_HELP=$(cat <<EOH
 show                      List all repos
 open <ALIAS>              Open the repository in the browser
 ALIAS                     The same as "open <ALIAS>"
-download <ALIAS>          Will download repo of the choosen ALIAS to the parent folder of this CLI
 
 $(_show_all)
 
 EOH
 )
-
-#repos[java]='https://github.com/qa-ops/qaops-automation-api'
-#repos[docs]='https://github.com/qa-ops/docs'
-
-function download_repo() {
-  local repo="${1}"
-  in_cyan "Cloning repo: ${repo} to ${PROJECTS_DIR}"
-
-  repo_name="${repos[${repo}]##*/}"
-  log "The repo name found is: ${repo_name}"
-
-  [[ -z "${GIT_SSH_PROTOCOL}" ]] && error "user config not found. \nPlease execute 'bb setup check'"
-
-  if [[ "${GIT_SSH_PROTOCOL}" == "true" ]]; then
-    log "Cloning ${repo_name} using SSH"
-    git clone "git@github.com:qa-ops/${repo_name}.git" "${PROJECTS_DIR}/${repo_name}"
-  else
-    log "Cloning ${repo_name} using HTTPS"
-    git clone "${repos[${repo}]}" "${PROJECTS_DIR}/${repo_name}"
-  fi
-}
 
 #Different actions based on arguments
 case ${1} in
@@ -54,12 +32,6 @@ case ${1} in
     alias="${2}"
     log "Alias given ${alias}"
     [[ -n "${repos[${alias}]}" ]] && open_file "${repos[${alias}]}" || _show_all
-  ;;
-  download)
-    repo="${2}"
-    log "Repo given: ${repo}"
-
-    [[ -n "${repos[${repo}]}" ]] && download_repo "${repo}"
   ;;
   *)
     alias="${1}"

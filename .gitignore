@@ -30,3 +30,4 @@ conf/user_config
 #folder to test some of the commands
 test
 
+.DS_STORE

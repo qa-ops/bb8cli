@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# vim: ft=sh
+SUBCOMMAND_DESC="Command to access the feedback form for the channel"
+SUBCOMMAND_HELP=$(cat <<EOH
+
+open <LANGUAGE>                 Open the feedback form on the browser
+                                  - LANGUAGE -> either 'br' or 'en'.
+                                      You can set the default language in the user_config file
+
+EOH
+)
+
+FEEDBACK_FORM_EN_URL="https://videos.qa-ops.com/feedback-en"
+FEEDBACK_FORM_PT_URL="https://videos.qa-ops.com/feedback-pt"
+
+case ${1} in
+  open)
+    language="${2:-${USER_LANGUAGE}}"
+
+    in_cyan "Opening feedback form in ${language}"
+
+    link_to_open="FEEDBACK_FORM_${language^^}_URL"
+    log "Link to open: ${!link_to_open}"
+    open "${!link_to_open}"
+  ;;
+esac
+

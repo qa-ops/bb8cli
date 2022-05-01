@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# vim: ft=sh
+SUBCOMMAND_DESC="Validate ids on an API for testing"
+SUBCOMMAND_HELP=$(cat <<EOH
+
+start-api             Starts docker wiremock
+
+EOH
+)
+
+#Different actions based on arguments
+case ${1} in
+  start-api)
+    in_cyan "Starting Wiremock server"
+
+    docker run --rm \
+          -p 8080:8080 \
+          --name wiremock \
+          -v "${RESOURCES_DIR}"/wiremock:/home/wiremock \
+          wiremock/wiremock:2.33.2
+  ;;
+esac
+

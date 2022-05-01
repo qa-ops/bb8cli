@@ -1,0 +1,10 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/users/4"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "users_4.json"
+  }
+}
